@@ -31,37 +31,37 @@ Goal:
 
 Check that the HP charger output is stable and the cable condition is good.
 
-![Charger opened](building-process-images/Charger_Opened.jpg)
+<img src="building-process-images/Charger_Opened.jpg" alt="Charger opened" width="520" />
 
 ### 2) Confirm polarity and input wiring to PD65 module
 
 Identify positive/negative leads and wire them correctly to module input pads.
 
-![Polarity and wiring](building-process-images/Polarity_and_Wiring.jpg)
+<img src="building-process-images/Polarity_and_Wiring.jpg" alt="Polarity and wiring" width="520" />
 
 ### 3) Solder the input leads to the module
 
 Keep solder joints short, clean, and strong to reduce resistance and heat.
 
-![How to solder](building-process-images/How_to_solder.jpg)
+<img src="building-process-images/How_to_solder.jpg" alt="How to solder" width="520" />
 
 ### 4) Add thermal gap using double-tape corner pads
 
 Do not place tape directly under hot components. Use small corner pads to create an air gap.
 
-![Double tape thermal gap](building-process-images/Double_tape_to_avoid_head.jpg)
+<img src="building-process-images/Double_tape_to_avoid_head.jpg" alt="Double tape thermal gap" width="520" />
 
 ### 5) Secure module mechanically with zip ties
 
 Use 3 zip ties for a friction-lock mount so the module does not wiggle when cable force is applied.
 
-![Secure with zip ties](building-process-images/How_to_secure_charger_with_zip_ties.jpg)
+<img src="building-process-images/How_to_secure_charger_with_zip_ties.jpg" alt="Secure with zip ties" width="520" />
 
 ### 6) Add protective outer casing
 
 Use a ventilated plastic cover to protect from dust/finger contact while allowing heat to escape.
 
-![Plastic casing](building-process-images/Plastic_casing.jpg)
+<img src="building-process-images/Plastic_casing.jpg" alt="Plastic casing" width="520" />
 
 ## Troubleshooting Notes
 
