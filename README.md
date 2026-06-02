@@ -1,99 +1,87 @@
-# 🚀 Project AirBase-Charger: Repurposing Obsolete 65W E-Waste into a High-Efficiency DIY Desk Charger
+# 65W Type-C Charger from E-Waste (HP Adapter + PD65 Module)
 
-### 👉 [**View Full Step-by-Step Video Guide on YouTube**] ## Project Overview
+This project converts an old HP 65W laptop adapter into a practical Type-C fast charger using a PD65 buck/trigger module.
 
-Project AirBase-Charger is a hardware-only (no-code) engineering effort to repurpose an obsolete, functional 65W HP laptop power adapter into a modern, safe, and highly efficient 25W+ smart-device charging station. 
+[![Watch Full Build Video](https://img.shields.io/badge/Watch%20Full%20Build%20Video-YouTube-red?style=for-the-badge&logo=youtube)](https://youtu.be/ffi_0DY8yGI)
 
-The goal was to bypass the current wave of "fake" high-wattage market chargers, save a high-quality salvaged component from a landfill, and document the rigorous, analytical troubleshooting required to make standard fixed-voltage laptop bricks work with proprietary, fine-tuned smartphone fast-charging protocols.
+Goal:
+- Reuse quality e-waste hardware
+- Build a reliable fast charger with minimal cost
+- Document the build process clearly with visuals
 
-## Component Breakdown & Architecture
+## What I Used
 
-The system consists of two primary power stages and a certified connection layer.
+- Old HP 65W laptop charger (19.5V, 3.33A)
+- PD65/HW-773 Type-C fast charging module
+- 5A E-marker Type-C cable
+- Zip ties
+- Foam/double tape spacers
+- Small plastic box for protection
 
-### 1. Prime Mover: Salvaged HP 65W Power Brick
-* **Source:** Salvaged from a non-functional laptop.
-* **Original Output:** Fixed 19.5V DC at 3.33A.
-* **Condition:** Checked for stable, noise-free output using a multimeter.
+## Safety First
 
-### 2. Smart Stage: HW-773 Buck Converter Module (V0.0.0)
-* **Controller:** ASIC-based (IP6525T or similar).
-* **Input:** Wide-voltage DC (up to 30V). Safe and efficient at 19.5V.
-* **Output:** Hardwired Power Delivery (PD) & Quick Charge (QC) profiles up to 30W+.
-* **Thermal Management:** Inductor ("MAGIC 220") and IC generate high heat. Hardwired in an un-sealed enclosure for natural convection.
+- Unplug mains power before opening or soldering anything.
+- Verify polarity with a multimeter before connecting the PD module.
+- Insulate all exposed contacts.
+- Do not enclose the module airtight; it needs airflow.
 
-### 3. Connection Layer: Nu Republic 100W/5A Display Cable
-* **Data Channel:** Certified 5A E-Marker chip embedded in the Type-C housing.
-* **Function:** Communicates power delivery capabilities to the phone and calculates real-time output wastage for visual verification.
+## Building Process (Step-by-Step with Images)
 
----
+### 1) Open the donor charger and inspect
 
-## Engineering Challenges & Troubleshooting Log
+Check that the HP charger output is stable and the cable condition is good.
 
-This section documents the analytical problem-solving required to move the project from prototype to reliable utility.
+![Charger opened](building-process-images/Charger_Opened.jpg)
 
-### Challenge 1: Isolate the "Super Fast Charging 2.0" Throttling Issue
+### 2) Confirm polarity and input wiring to PD65 module
 
-A persistent protocol mismatch on Samsung devices was observed: standard fixed 20V laptop-charging streams would scale, but the highly picky Samsung "Super Fast Charging 2.0" (45W) handshake, which relies on **PPS (Programmable Power Supply)** and high **current (up to 4.5A)**, failed to trigger.
+Identify positive/negative leads and wire them correctly to module input pads.
 
-* **Hypothesis A: Frayed Salvaged Wire Resistance.**
-* **Hypothesis B: Insufficient Cable E-Marker Chip registers.**
-* **Hypothesis C: Power Source Current Ceiling.**
+![Polarity and wiring](building-process-images/Polarity_and_Wiring.jpg)
 
-#### Diagnostics: Variable Isolation
+### 3) Solder the input leads to the module
 
-I designed an analytical diagnostic to isolate the true culprit: I temporarily desoldered the module from the HP brick (65W, 3.3A limit) and connected it to a massive **170W Lenovo Legion brick** (20V, 8.5A limit).
+Keep solder joints short, clean, and strong to reduce resistance and heat.
 
-The 8.5A reservoir removed all input power restrictions.
+![How to solder](building-process-images/How_to_solder.jpg)
 
-#### Diagnosis: ASIC Firmware Limitation
+### 4) Add thermal gap using double-tape corner pads
 
-Even with 170W of available input power and a certified 5A cable, the phone still only displayed the standard "Super Fast Charging" flag at a consistent, stable 32W at the input side. 
+Do not place tape directly under hot components. Use small corner pads to create an air gap.
 
-This **flawless diagnostic isolated the true bottleneck**: the issue was not the power source, the leads, or the cable. The HW-773's hardwired ASIC controller lacked the proprietary vendor tokens in its firmware registers to complete the 4.05A PPS handshake required for Samsung's 2.0 designation.
+![Double tape thermal gap](building-process-images/Double_tape_to_avoid_head.jpg)
 
-#### Conclusion for the HP Build
+### 5) Secure module mechanically with zip ties
 
-The existing hardware configuration was working beautifully and hitting the absolute native physical saturation of the phone's standard fast-charging tier. For zero cash investment, saving 25 minutes on every full cycle is a definitive engineering win.
+Use 3 zip ties for a friction-lock mount so the module does not wiggle when cable force is applied.
 
----
+![Secure with zip ties](building-process-images/How_to_secure_charger_with_zip_ties.jpg)
 
-## Mechanical Assembly & Ruggedization
+### 6) Add protective outer casing
 
-Getting rid of a traditional "box as a chassis" design and using the heavy HP brick as the rigid mechanical foundation solved structural wiggling problems completely.
+Use a ventilated plastic cover to protect from dust/finger contact while allowing heat to escape.
 
-### 1. The Friction Lock: 3-Zip-Tie Mechanical Anchoring
+![Plastic casing](building-process-images/Plastic_casing.jpg)
 
-Since drilling into the dense, high-voltage internal components of the HP brick case is dangerous, I designed a non-destructive mechanical friction lock using three parallel zip-ties. This rugged connection slots into the HW-773's castellated mounting tabs, preventing any back-and-forth movement from cable tugs.
+## Troubleshooting Notes
 
-### 2. Thermal & Electrical Insulation: 4-Corner Pad Air-Gap
+- Standard fast charging is stable and efficient with this setup.
+- Samsung "Super Fast Charging 2.0" may not trigger on some PD modules due to firmware-level PPS limitations in the module controller, not necessarily because of the source adapter.
+- Testing with a higher-power source can help isolate whether the limit is source current, cable, or module firmware.
 
-The "MAGIC 220" inductor and IC reach temperatures of $60^\circ\text{C}$ to $80^\circ\text{C}$ ($140^\circ\text{F}$ to $176^\circ\text{F}$) under a 3A load. Placing foam tape directly under these components traps heat, potentially causing thermal throttling or melting adhesive.
+## Bill of Materials (Approx)
 
-I engineered a solution using four tiny tape pads at the outer edges only. This creates a tiny, elevated **air gap directly underneath the hot components**, allowing for natural air convection and preventing heat buildup.
+| Component | Role | Cost |
+| :--- | :--- | :--- |
+| HP 65W adapter (salvaged) | Main DC source | 0 |
+| PD65/HW-773 module | Type-C PD/QC negotiation + buck stage | ~150 INR |
+| 5A E-marker Type-C cable | Stable high-current USB-C path | ~300 INR |
+| Zip ties + tape + casing | Mechanical and insulation support | ~40 to 60 INR |
 
-### 3. Ventilated Box Shield
+Total: around 490 to 510 INR depending on parts available.
 
-The custom ventilated small plastic box enclosure turns into a simple, hassle-free dust and finger shield. It provides crucial physical damage protection while natural convection gaps around the edges serve as exhaust vents for thermal management.
+## Result
 
-## Project BOM (Bill of Materials)
+The build gives a robust, low-cost Type-C charger by reusing an old HP power brick and adding a PD65 smart output stage.
 
-| Component | Source/Type | Purpose in Circuit | Estimated Cost |
-| :--- | :--- | :--- | :--- |
-| **HP 65W Power Brick** | Salvaged | Prime DC Power Source (Fixed 19.5V, 3.33A) | ₹0 (E-Waste Recycle) |
-| **HW-773 Buck Converter Module** | IP6525T Controller | DC-DC Step-Down (Smart Power Negotiator) | ~₹300 |
-| **Nu Republic Blaze Fusion Spot** | Certified 5A E-Marker | certified Data Channel & Visual Wattage Verification | ~₹300 |
-| **Nylon Zip Ties** | Household | Non-destructive Mechanical Anchoring Solution | ~₹10 |
-| **Foam Pads** | DIY Supply | Corner-Pads (Thermal Air Gap creation) | ~₹10 |
-| **Plastic Dust Shield Box** | Household | Dust & Physical Protection Enclosure | ~₹20 |
-| **MATTE BLACK Electrical Tape** | DIY Supply | Aesthetic Side Anchors (factory-finish look) | ~₹20 |
-| | | | |
-| **TOTAL** | | | **₹660 (Highly Optimized DIY Build)** |
-
-*Compared to a branded 65W GaN retail charger (₹1,500-₹2,500), this build saves significantly on e-waste while providing heavy-duty performance.*
-
-### 👉 [**View Full Assembly Video on YouTube**] ```
-
----
-
-
-#DIY electronics #Upcycle #Ewaste #HW-773 #PowerDelivery #QuickCharge #SamsungFastCharging #IoT #IoT Engineering
+If you are viewing this repo for replication, follow the images above in order and test each stage before moving to the next one.
